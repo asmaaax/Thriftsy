@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { Input, Icon, Button } from '@rneui/base';
+import { StyleSheet, Text, View, ScrollView, ActivityIndicator } from 'react-native';
+import { Input, Icon, Button, Image } from '@rneui/base';
 import { togglePasswordVisibility } from '../hooks/togglePasswordVisiblity';
 import React, { useState } from 'react';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -14,12 +14,16 @@ export default function SignUpScreen({ navigation }) {
   const [password2, setPassword2] = useState('')
   const { rightIcon, passwordVisibility, changePasswordVisibility } = togglePasswordVisibility();
   return (
-    // <KeyboardAwareScrollView
-    // resetScrollToCoords={{ x: 0, y: 0 }}
-    // scrollEnabled={true}>
     
+    <ScrollView>
     <View style={styles.container}>
-      <View style={styles.logo}><Text>This space is for Logo</Text></View>
+    <View style={styles.logo}>
+        <Image
+        source={ require('../../assets/logo2.png')}
+        containerStyle={styles.image}
+        PlaceholderContent={<ActivityIndicator />}
+        />
+      </View>
       <View style={styles.input}>
 
       <Input
@@ -117,7 +121,7 @@ export default function SignUpScreen({ navigation }) {
               }}
               containerStyle={{
                 width: 335,
-                minHeight: 400,
+                // minHeight: 400,
                 marginTop: 20,
                 marginBottom: 0
                 
@@ -131,8 +135,6 @@ export default function SignUpScreen({ navigation }) {
 
             />
      
-      </View>
-      <View style={{backgroundColor: '#FFF', flex: 1}}>
       <Button
               containerStyle={{
                 width: 335,
@@ -150,8 +152,7 @@ export default function SignUpScreen({ navigation }) {
       
       <StatusBar style="auto" />
     </View>
-// </KeyboardAwareScrollView>
-  );
+    </ScrollView>  );
 }
 
 const styles = StyleSheet.create({
@@ -160,12 +161,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     justifyContent: 'flex-start',
   },
+  image: {
+    flex: 1,
+    // resizeMethod: 'resize'
+  },
   logo: {
     flex: 1,
-    backgroundColor: '#FFA26B',
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: '10%'
+    backgroundColor: '#FFF',
+    minHeight: '40%'
   },
   input: {
     flex: 3,
@@ -180,6 +183,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
   },
-  text: { color: '#FFA26B', fontSize: 24, fontStyle: 'italic' },
-  text2: { color: '#10c699', fontSize: 24, fontStyle: 'italic' }
+  text: { color: '#FFA26B', fontSize: 24, fontStyle: 'italic', fontFamily: 'Roboto' },
+  text2: { color: '#10c699', fontSize: 24, fontStyle: 'italic', fontFamily: 'Roboto' }
 });
