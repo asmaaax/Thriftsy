@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ScrollView, Touchable, TouchableOpacity } from 'react-native';
 import { Input, Icon, Button, Card, Avatar, ListItem } from '@rneui/base';
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 export default function ProfileScreen({ navigation }) {
   const listItems = [
@@ -12,6 +13,19 @@ export default function ProfileScreen({ navigation }) {
     {'value': 'Settings', 'key': 5, 'icon': 'gear'},
     {'value': 'Delete Account', 'key': 6, 'icon': 'trash'}
   ]
+
+  currentUser = useSelector(state => state.logged_in_user)
+
+  const dispatch = useDispatch();
+
+  const logOut = () =>{
+    const action = {
+      type: 'LOG_OUT',
+      payload: ''
+    }
+    dispatch(action)
+  }
+
   return (
 <ScrollView>    
     <View style={styles.container}>
@@ -33,9 +47,13 @@ export default function ProfileScreen({ navigation }) {
             <View>
           
           <Text style={styles.fonts2} h2>
-            Username{'\n'}Email{'\n'}Something random{'\n'}Something random
+            {currentUser.userName}{'\n'}{'\n'}{currentUser.userEmail}
           </Text>
-          <TouchableOpacity>
+          <TouchableOpacity
+          onPress={() => {
+            logOut();
+            navigation.navigate('Sign In');
+          }}>
           <Text style={styles.fonts3}>Sign Out</Text></TouchableOpacity>
           </View>
         </Card>
@@ -54,6 +72,7 @@ export default function ProfileScreen({ navigation }) {
           type='font-awesome'
           color='#FFA26B'
           size={20}
+          // iconContainerStyle={{padding: 30}}
           />
             <Text style={styles.fonts}>{item.value}</Text>
             </View>
@@ -83,17 +102,18 @@ const styles = StyleSheet.create({
   },
   fonts: {
     color: '#FFA26B',
-    // textAlign: 'left',
+    // textAlign: 'center',
     fontFamily: 'Roboto',
     // fontWeight: 'bold',
     fontSize: 22,
-    includeFontPadding: true
+    includeFontPadding: true,
+    // margin: 10
   },
   fonts2: {
     color: '#FFF',
     textAlign: 'left',
     fontFamily: 'Roboto',
-    fontSize: 22,
+    fontSize: 24,
     margin: 10,
   },
   fonts3: {
