@@ -1,9 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { Input, Icon, Button } from '@rneui/base';
+import { StyleSheet, Text, View, ScrollView, ActivityIndicator } from 'react-native';
+import { Input, Icon, Button, Image } from '@rneui/base';
 import { togglePasswordVisibility } from '../hooks/togglePasswordVisiblity';
 import React, { useState } from 'react';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { useSelector, useDispatch } from 'react-redux';
 
 
 
@@ -13,13 +13,114 @@ export default function SignUpScreen({ navigation }) {
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('')
   const { rightIcon, passwordVisibility, changePasswordVisibility } = togglePasswordVisibility();
+
+  usersList = useSelector(state => state.users)
+
+  const dispatch = useDispatch();
+
+ 
+  const validateEmail = email => {
+    return /\S+@\S+\.\S+/.test(email);
+}
+
+
+const userExists = (userDetails, userList) => {
   return (
-    // <KeyboardAwareScrollView
-    // resetScrollToCoords={{ x: 0, y: 0 }}
-    // scrollEnabled={true}>
+    userList.filter(item => item.userName === userDetails.username1 || item.userEmail === userDetails.email1).length > 0)
+  
+}
+
+
+const validData = (email, username, password, password2) => {
+  if (email && username && password && password2){
+    return true
+  } else {
+    return false
+  }
+}
+
+const checkPassword = (password, password2) => {
+    if (password === password2){
+      return true
+    }
+    else {
+      return false
+    }
+}
+
+const handleSignUp = (email, username, password, password2, userList) => 
+{
+    const dataValid = validData(email, username, password, password2)
+    let userExist;
+    let validPassword;
+    let emailValid;
+    if (dataValid){
+        emailValid = validateEmail(email);
+        if (emailValid) {
+          // console.log(userList)
+          details = {email1: email, username1: username}
+          userExist  = userExists(details, userList)
+          if (userExist){
+            alert('Username and/or email already taken')
+            return false
+          }
+          else{
+            validPassword = checkPassword(password, password2)
+            if (validPassword){
+              return true
+            }
+            else{
+              alert('Password details do not match')
+              return false
+            }
+          }
+        } else {
+            alert("Invalid email format.Please check your input and try again.");
+            return false
+        }
+
+    }
+    else {
+      alert('Invalid entry, you have some empty input')
+      return false
+    }
+  }
+
+
+  function signUpUser(email, username, password, password2, userList){
+    const signUp = handleSignUp(email, username, password, password2, userList)
+    let userInfo;
+    let action;
+    if (signUp){
+      userInfo = {userName: username, passWord: password, userEmail: email}
+      action = {
+        type: 'ADD_USER',
+        payload: userInfo
+      }
+      dispatch(action)
+      setEmail('')
+      setUsername('')
+      setPassword('')
+      setPassword2('')
+      }
+    else{
+      console.log('Unsuccessful')
+    }
+  }
+
+
+
+  return (
     
+    <ScrollView>
     <View style={styles.container}>
-      <View style={styles.logo}><Text>This space is for Logo</Text></View>
+    <View style={styles.logo}>
+        <Image
+        source={ require('../../assets/logo2.png')}
+        containerStyle={styles.image}
+        PlaceholderContent={<ActivityIndicator />}
+        />
+      </View>
       <View style={styles.input}>
 
       <Input
@@ -34,7 +135,8 @@ export default function SignUpScreen({ navigation }) {
           color='#FFA26B'
         />
       }
-      onChangeText={value => setUsername(value)}
+      value={username}
+      onChangeText={value => setUsername(value.trim())}
       />
       <Input
       placeholder="Enter email address"
@@ -46,7 +148,8 @@ export default function SignUpScreen({ navigation }) {
           size={24}
           color='#FFA26B'
         /> }
-        onChangeText={value => setEmail(value)}
+        value={email}
+        onChangeText={value => setEmail(value.trim())}
         />
        <Input
       placeholder="Enter password"
@@ -70,7 +173,8 @@ export default function SignUpScreen({ navigation }) {
           onPress={changePasswordVisibility}
         />
       }
-      onChangeText={value => setPassword(value)}
+      value={password}
+      onChangeText={value => setPassword(value.trim())}
       />
       <Input
       placeholder="Confirm password"
@@ -94,7 +198,8 @@ export default function SignUpScreen({ navigation }) {
           onPress={changePasswordVisibility}
         />
       }
-      onChangeText={value => value => setPassword2(value)}
+      value={password2}
+      onChangeText={value => setPassword2(value.trim())}
       />
 
       </View>
@@ -117,22 +222,20 @@ export default function SignUpScreen({ navigation }) {
               }}
               containerStyle={{
                 width: 335,
-                minHeight: 400,
+                // minHeight: 400,
                 marginTop: 20,
                 marginBottom: 0
                 
               }}
               onPress={()=> {
-                
-                console.log(`Email is ${email} and Password is ${password}`)}
+                signUpUser(email, username, password, password2, usersList);
+              }
                
               
               }
 
             />
      
-      </View>
-      <View style={{backgroundColor: '#FFF', flex: 1}}>
       <Button
               containerStyle={{
                 width: 335,
@@ -150,8 +253,7 @@ export default function SignUpScreen({ navigation }) {
       
       <StatusBar style="auto" />
     </View>
-// </KeyboardAwareScrollView>
-  );
+    </ScrollView>  );
 }
 
 const styles = StyleSheet.create({
@@ -160,12 +262,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     justifyContent: 'flex-start',
   },
+  image: {
+    flex: 1,
+    // resizeMethod: 'resize'
+  },
   logo: {
     flex: 1,
-    backgroundColor: '#FFA26B',
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: '10%'
+    backgroundColor: '#FFF',
+    minHeight: '40%'
   },
   input: {
     flex: 3,
@@ -180,6 +284,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
   },
-  text: { color: '#FFA26B', fontSize: 24, fontStyle: 'italic' },
-  text2: { color: '#10c699', fontSize: 24, fontStyle: 'italic' }
+  text: { color: '#FFA26B', fontSize: 24, fontStyle: 'italic', fontFamily: 'Roboto' },
+  text2: { color: '#10c699', fontSize: 24, fontStyle: 'italic', fontFamily: 'Roboto' }
 });

@@ -5,9 +5,9 @@ import React, { useState } from 'react';
 
 export default function ProfileScreen({ navigation }) {
   const listItems = [
-    {'value': 'My Listings', 'key': 1, 'icon': 'rectangle-list'},
+    {'value': 'My Listings', 'key': 1, 'icon': 'list'},
     {'value': 'Saved Listings', 'key': 2, 'icon': 'cart-arrow-down'},
-    {'value': 'My Location', 'key': 3, 'icon': 'location-pin'},
+    {'value': 'My Location', 'key': 3, 'icon': 'map-marker'},
     {'value': 'My Notifications', 'key': 4, 'icon': 'bell'},
     {'value': 'Settings', 'key': 5, 'icon': 'gear'},
     {'value': 'Delete Account', 'key': 6, 'icon': 'trash'}
@@ -24,8 +24,8 @@ export default function ProfileScreen({ navigation }) {
           <Avatar.Accessory 
           color='#FFA26B'
           backgroundColor='#10c699'
-          containerStyle={{ borderRadius: 50 }}
-          size={24} />
+          containerStyle={{ borderRadius: 100, borderWidth: 0 }}
+          size={42} />
         </Avatar>
       <View style={styles.card}>
         <Card 
@@ -38,9 +38,7 @@ export default function ProfileScreen({ navigation }) {
           <TouchableOpacity>
           <Text style={styles.fonts3}>Sign Out</Text></TouchableOpacity>
           </View>
-         
         </Card>
-        
         </View>
         <View style={styles.container}>
           {profileList = listItems.map((item) =>
@@ -49,22 +47,22 @@ export default function ProfileScreen({ navigation }) {
           bottomDivider 
           containerStyle={{  backgroundColor: '#FFF', padding: 24, margin: 10, borderRadius: 5, borderBottomWidth: 1, borderColor: '#10c699'}}>
           <ListItem.Content>
-          <ListItem.Subtitle containerStyle={{flexDirection: 'row'}}>
+          <ListItem.Subtitle>
+          <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
           <Icon
           name={item.icon}
           type='font-awesome'
           color='#FFA26B'
-          size={18}
+          size={20}
           />
             <Text style={styles.fonts}>{item.value}</Text>
+            </View>
             </ListItem.Subtitle>
           </ListItem.Content>
           <ListItem.Chevron iconStyle={{color:'#FFA26B' }}/>
         </ListItem>
-          )}
-            
+          )}   
         </View>
-     
       <StatusBar style="auto" />
     </View>
     </ScrollView>
@@ -85,35 +83,26 @@ const styles = StyleSheet.create({
   },
   fonts: {
     color: '#FFA26B',
-    textAlign: 'left',
-    fontFamily: 'sans-serif',
-    fontWeight: 'bold',
-    fontSize: 16,
-    marginLeft: 10,
+    // textAlign: 'left',
+    fontFamily: 'Roboto',
+    // fontWeight: 'bold',
+    fontSize: 22,
     includeFontPadding: true
   },
   fonts2: {
     color: '#FFF',
     textAlign: 'left',
-    fontFamily: 'sans-serif',
+    fontFamily: 'Roboto',
     fontSize: 22,
     margin: 10,
   },
   fonts3: {
     color: '#FFF',
     textAlign: 'left',
-    fontFamily: 'sans-serif',
+    fontFamily: 'Roboto',
+    fontStyle: 'italic',
     textDecorationLine: 'underline',
-    fontSize: 22,
+    fontSize: 20,
     margin: 10,
-  },
-  button: {
-    flex: 1,
-    backgroundColor: '#FFF',
-    marginLeft: 10,
-    marginRight: 10,
-    marginTop: 20
-  },
-  text: { color: '#FFA26B', fontSize: 24, fontStyle: 'italic' },
-  text2: { color: '#10c699', fontSize: 24, fontStyle: 'italic' }
+  }
 });
