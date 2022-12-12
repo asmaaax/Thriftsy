@@ -3,12 +3,46 @@ import { StyleSheet, Text, View, ActivityIndicator, ScrollView } from 'react-nat
 import { Input, Icon, Button, Image } from '@rneui/base';
 import React, { useState } from 'react';
 import { togglePasswordVisibility } from '../hooks/togglePasswordVisiblity';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector, useDispatch } from 'react-redux';
 
 export default function SignInScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { rightIcon, passwordVisibility, changePasswordVisibility } = togglePasswordVisibility();
+  
+  usersList = useSelector(state => state.users)
+
+  const dispatch = useDispatch();
+
+  const checkUserDetails = (userDetails, userList) => {
+    
+    const userExists =  userList.filter(item => item.passWord === userDetails.password1 && item.userEmail === userDetails.email1);
+    console.log(userExists)
+    if (userExists.length > 0){
+      username = userExists[0].userName
+      const action = {
+        type: 'LOG_IN',
+        payload: username
+      }
+      dispatch(action)
+      console.log('LogIn Successful')
+    }
+     else {
+        alert('User not found. Please crosscheck your details or Sign up')
+      }
+  }
+
+  const logIn = (email, password, userList) => {
+    let userDetails = {email1: email, password1: password}
+    if (email && password){
+      checkUserDetails(userDetails, userList)
+    }
+    else{
+      alert('Invalid input. All fields are required')
+    }
+  }
+  
+  
   return (
     <ScrollView>
     <View style={styles.container}>
@@ -33,6 +67,7 @@ export default function SignInScreen({ navigation }) {
         />
       }
       onChangeText={value => setEmail(value)}
+      value={email}
       />
        <Input
       placeholder="Enter password"
@@ -57,6 +92,7 @@ export default function SignInScreen({ navigation }) {
         />
       }
       onChangeText={value => setPassword(value)}
+      value={password}
       />
       </View>
       <View style={styles.button}>
@@ -82,7 +118,7 @@ export default function SignInScreen({ navigation }) {
                 marginTop: 30,
                 
               }}
-              onPress={()=> console.log(`Email is ${email} and Password is ${password}`)}
+              onPress={()=> logIn(email, password, usersList)}
             />
       
       <Button
