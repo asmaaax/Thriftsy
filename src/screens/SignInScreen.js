@@ -133,7 +133,7 @@ export default function SignInScreen({ navigation }) {
               onPress={()=> {
                 const logInSuccess = logIn(email, password, usersList)
                 if (logInSuccess){
-                navigation.navigate('Profile')}
+                navigation.navigate('Tabs')}
               }}
             />
       

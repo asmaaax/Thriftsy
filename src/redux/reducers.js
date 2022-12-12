@@ -7,7 +7,7 @@ export function userReducer(state, action){
             console.log('New user added')
             return {...state, users: [...state.users, action.payload]}
         case 'DEL_USER':
-            const newUsersArray = state.users.filter(user => user !== action.payload)
+            const newUsersArray = state.users.filter(user => user.userName !== action.payload.userName)
             console.log('user deleted')
             return {...state, users: newUsersArray}
         case 'LOG_IN':

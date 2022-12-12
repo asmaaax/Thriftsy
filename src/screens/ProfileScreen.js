@@ -3,16 +3,32 @@ import { StyleSheet, Text, View, ScrollView, Touchable, TouchableOpacity } from 
 import { Input, Icon, Button, Card, Avatar, ListItem } from '@rneui/base';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 export default function ProfileScreen({ navigation }) {
   const listItems = [
-    {'value': 'My Listings', 'key': 1, 'icon': 'list'},
-    {'value': 'Saved Listings', 'key': 2, 'icon': 'cart-arrow-down'},
-    {'value': 'My Location', 'key': 3, 'icon': 'map-marker'},
-    {'value': 'My Notifications', 'key': 4, 'icon': 'bell'},
-    {'value': 'Settings', 'key': 5, 'icon': 'gear'},
-    {'value': 'Delete Account', 'key': 6, 'icon': 'trash'}
+    {'value': 'My Listings', 'key': 1, 'icon': 'list', func : function () {
+      alert('This functionality is still in the works')
+    }},
+    {'value': 'Saved Listings', 'key': 2, 'icon': 'cart-arrow-down', func : function () {
+      alert('This functionality is still in the works')
+    }},
+    {'value': 'My Location', 'key': 3, 'icon': 'map-marker', func : function () {
+      alert('This functionality is still in the works')
+    }},
+    {'value': 'My Notifications', 'key': 4, 'icon': 'bell', func : function () {
+      alert('This functionality is still in the works')
+    }},
+    {'value': 'Settings', 'key': 5, 'icon': 'gear', func : function () {
+      alert('This functionality is still in the works')
+    }},
+    {'value': 'Delete Account', 'key': 6, 'icon': 'trash', func : function () {
+      confirmDelete()
+    }}
   ]
+
+  const [showAlert, setShowAlert] = useState(false)
+  
 
   currentUser = useSelector(state => state.logged_in_user)
 
@@ -25,6 +41,22 @@ export default function ProfileScreen({ navigation }) {
     }
     dispatch(action)
   }
+
+  const deleteAccount = () => {
+    const action = {
+      type: 'DEL_USER',
+      payload: currentUser
+    }
+    dispatch(action)
+    navigation.navigate('Sign Up')
+  }
+
+  const confirmDelete = () => {
+    setShowAlert(true)
+  };
+
+  
+  
 
   return (
 <ScrollView>    
@@ -59,29 +91,51 @@ export default function ProfileScreen({ navigation }) {
         </Card>
         </View>
         <View style={styles.container}>
-          {profileList = listItems.map((item) =>
-          <ListItem 
+          {profileList = listItems.map((item) =><TouchableOpacity
           key={item.key}
+          onPress={() => item.func()}>
+          <ListItem 
+          
           bottomDivider 
           containerStyle={{  backgroundColor: '#FFF', padding: 24, margin: 10, borderRadius: 5, borderBottomWidth: 1, borderColor: '#10c699'}}>
           <ListItem.Content>
           <ListItem.Subtitle>
-          <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+          <View style={{flexDirection: 'row'}}>
           <Icon
           name={item.icon}
           type='font-awesome'
           color='#FFA26B'
           size={20}
-          // iconContainerStyle={{padding: 30}}
           />
-            <Text style={styles.fonts}>{item.value}</Text>
+            <Text style={styles.fonts}>{"  "}{item.value}</Text>
             </View>
             </ListItem.Subtitle>
           </ListItem.Content>
           <ListItem.Chevron iconStyle={{color:'#FFA26B' }}/>
         </ListItem>
+        </TouchableOpacity>
           )}   
         </View>
+        <AwesomeAlert
+          show={showAlert}
+          showProgress={false}
+          title="Delete Account?"
+          message="Are you sure you want to delete your account?"
+          closeOnTouchOutside={true}
+          closeOnHardwareBackPress={false}
+          showCancelButton={true}
+          showConfirmButton={true}
+          cancelText="No, cancel"
+          confirmText="Yes, delete it"
+          confirmButtonColor='#FFA26B'
+          cancelButtonColor='#10c699'
+          onCancelPressed={() => {
+            setShowAlert(false)
+          }}
+          onConfirmPressed={() => {
+           deleteAccount()
+          }}
+        />
       <StatusBar style="auto" />
     </View>
     </ScrollView>
@@ -102,12 +156,9 @@ const styles = StyleSheet.create({
   },
   fonts: {
     color: '#FFA26B',
-    // textAlign: 'center',
     fontFamily: 'Roboto',
-    // fontWeight: 'bold',
     fontSize: 22,
     includeFontPadding: true,
-    // margin: 10
   },
   fonts2: {
     color: '#FFF',

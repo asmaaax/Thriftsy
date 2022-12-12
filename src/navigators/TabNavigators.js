@@ -1,15 +1,21 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import HomeScreen from './src/screens/HomeScreen';
-import ProfileScreen from './src/screens/ProfileScreen';
-import ChatScreen from './src/screens/ChatScreen';
+import HomeScreen from '../screens/HomeScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import ChatScreen from '../screens/ChatScreen';
+import { StyleSheet } from 'react-native';
+
 
 const Tab = createBottomTabNavigator();
 
 export default function Tabs(){
 
     return(
-<Tab.Navigator>
+<Tab.Navigator
+screenOptions={{
+    tabBarActiveTintColor: '#FFA26B',
+    headerShown: false
+  }}>
 <Tab.Screen name="Home" component={HomeScreen} options={{
     tabBarLabel: 'Home',
     tabBarIcon: ({ color, size }) => (
@@ -34,8 +40,7 @@ export default function Tabs(){
       <MaterialCommunityIcons name="account" color={color} size={size} />
     ),
   }}/>
-   {/* <Tab.Screen name='Sign In' component={SignInScreen}/> */}
-{/* <Tab.Screen name='Sign Up' component={SignUpScreen}/> */}
+
 </Tab.Navigator>
 )}
 
