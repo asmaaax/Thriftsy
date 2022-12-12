@@ -22,23 +22,35 @@ export default function SignInScreen({ navigation }) {
       username = userExists[0].userName
       const action = {
         type: 'LOG_IN',
-        payload: username
+        payload: {userName: username, userEmail: userDetails.email1}
       }
       dispatch(action)
       console.log('LogIn Successful')
+      return true
     }
      else {
         alert('User not found. Please crosscheck your details or Sign up')
+        return false
       }
   }
 
   const logIn = (email, password, userList) => {
     let userDetails = {email1: email, password1: password}
+    let checkDetails;
     if (email && password){
-      checkUserDetails(userDetails, userList)
+      checkDetails = checkUserDetails(userDetails, userList);
+      if (checkDetails){
+        setEmail('')
+        setPassword('')
+        return true
+      }
+      else {
+        return false
+      }
     }
     else{
       alert('Invalid input. All fields are required')
+      return false
     }
   }
   
@@ -66,7 +78,7 @@ export default function SignInScreen({ navigation }) {
           color='#FFA26B'
         />
       }
-      onChangeText={value => setEmail(value)}
+      onChangeText={value => setEmail(value.trim())}
       value={email}
       />
        <Input
@@ -91,7 +103,7 @@ export default function SignInScreen({ navigation }) {
           onPress={changePasswordVisibility}
         />
       }
-      onChangeText={value => setPassword(value)}
+      onChangeText={value => setPassword(value.trim())}
       value={password}
       />
       </View>
@@ -118,7 +130,11 @@ export default function SignInScreen({ navigation }) {
                 marginTop: 30,
                 
               }}
-              onPress={()=> logIn(email, password, usersList)}
+              onPress={()=> {
+                const logInSuccess = logIn(email, password, usersList)
+                if (logInSuccess){
+                navigation.navigate('Tabs')}
+              }}
             />
       
       <Button

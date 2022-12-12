@@ -1,10 +1,9 @@
-import HomeScreen from './src/screens/HomeScreen';
-import ProfileScreen from './src/screens/ProfileScreen';
+
 import SignInScreen from './src/screens/SignInScreen';
 import SignUpScreen from './src/screens/SignUpScreen.JS';
-import ChatScreen from './src/screens/ChatScreen';
+
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -12,6 +11,7 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { userReducer } from './src/redux/reducers';
 import { state} from './src/redux/store';
+import Tabs from './src/navigators/TabNavigators';
 
 
 
@@ -24,10 +24,10 @@ export default function App() {
   <Provider store={store}>
   <NavigationContainer>
 
-    <Stack.Navigator initialRouteName='Sign Up'>
-      <Stack.Screen name='Sign In' component={SignInScreen}/>
-      <Stack.Screen name='Sign Up' component={SignUpScreen}/>
-      <Stack.Screen name='Profile' component={ProfileScreen}/>
+    <Stack.Navigator initialRouteName='Sign In'>
+      <Stack.Screen name='Sign In' component={SignInScreen} options={{title: '', headerBackVisible: false}}/>
+      <Stack.Screen name='Sign Up' component={SignUpScreen} options={{title: '', headerBackVisible: false}}/>
+      <Stack.Screen name='Tabs' component={Tabs} options={{title: '', headerBackVisible: false}}/>
     </Stack.Navigator>
       
 
