@@ -1,12 +1,9 @@
 
 import SignInScreen from './src/screens/SignInScreen';
 import SignUpScreen from './src/screens/SignUpScreen.JS';
-
-import { StatusBar } from 'expo-status-bar';
-
+import LandingScreen from './src/screens/LandingScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { userReducer } from './src/redux/reducers';
@@ -24,7 +21,8 @@ export default function App() {
   <Provider store={store}>
   <NavigationContainer>
 
-    <Stack.Navigator initialRouteName='Sign In'>
+    <Stack.Navigator initialRouteName='Landing'>
+      <Stack.Screen name='Landing' component={LandingScreen} options={{title: '', headerBackVisible: false}}/>
       <Stack.Screen name='Sign In' component={SignInScreen} options={{title: '', headerBackVisible: false}}/>
       <Stack.Screen name='Sign Up' component={SignUpScreen} options={{title: '', headerBackVisible: false}}/>
       <Stack.Screen name='Tabs' component={Tabs} options={{title: '', headerBackVisible: false}}/>

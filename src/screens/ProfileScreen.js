@@ -4,7 +4,6 @@ import { Input, Icon, Button, Card, Avatar, ListItem } from '@rneui/base';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import AwesomeAlert from 'react-native-awesome-alerts';
-// import { fetchData } from '../ext_api/apiFunctions';
 import DialogPrompt from '../components/DialogPrompt';
 
 
