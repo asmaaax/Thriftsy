@@ -1,11 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ScrollView, Touchable, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { Input, Icon, Button, Card, Avatar, ListItem } from '@rneui/base';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import AwesomeAlert from 'react-native-awesome-alerts';
+import DialogPrompt from '../components/DialogPrompt';
+
 
 export default function ProfileScreen({ navigation }) {
+
+  const validatePostcodeURL = 'https://api.postcodes.io/postcodes/'
+
   const listItems = [
     {'value': 'My Listings', 'key': 1, 'icon': 'list', func : function () {
       alert('This functionality is still in the works')
@@ -14,7 +19,7 @@ export default function ProfileScreen({ navigation }) {
       alert('This functionality is still in the works')
     }},
     {'value': 'My Location', 'key': 3, 'icon': 'map-marker', func : function () {
-      alert('This functionality is still in the works')
+      getLocation()
     }},
     {'value': 'My Notifications', 'key': 4, 'icon': 'bell', func : function () {
       alert('This functionality is still in the works')
@@ -27,8 +32,11 @@ export default function ProfileScreen({ navigation }) {
     }}
   ]
 
-  const [showAlert, setShowAlert] = useState(false)
+
+  const [userLocation, setUserLocation] = useState('Update your location')
   
+  const [showAlert, setShowAlert] = useState(false)
+  const [showPrompt, setShowPrompt] = useState(false)
 
   currentUser = useSelector(state => state.logged_in_user)
 
@@ -51,11 +59,44 @@ export default function ProfileScreen({ navigation }) {
     navigation.navigate('Sign Up')
   }
 
-  const confirmDelete = () => {
-    setShowAlert(true)
-  };
+  const confirmDelete = () => setShowAlert(true);
+
+  const cancelFunction = () => {
+    setShowPrompt(false);
+    console.log('Cancelled')
+  }
 
   
+
+  const validPostcode = async (postcode) => {
+    fetch(`${validatePostcodeURL}${postcode}/validate`, {
+      method: 'GET',
+    })
+    .then(response =>  response.json() )
+    .then( d =>  {
+      setShowPrompt(false)
+      if (d.result){
+        getTown(postcode)
+      }
+      else {
+        alert('You entered an invalid postcode')
+      }})
+    .catch(err => {console.log(`ERROR: ${err}`)})
+  }
+
+  const getLocation = () => setShowPrompt(true);
+
+  const getTown = async (postcode) => {
+    fetch(`${validatePostcodeURL}${postcode}`, {
+      method: 'GET',
+    })
+    .then(response =>  response.json() )
+    .then( d =>  {
+        setUserLocation(d.result.parish);
+        alert('Your location has been updated');
+      })  
+    .catch(err => {console.log(`ERROR: ${err}`)})
+  }
   
 
   return (
@@ -79,7 +120,7 @@ export default function ProfileScreen({ navigation }) {
             <View>
           
           <Text style={styles.fonts2} h2>
-            {currentUser.userName}{'\n'}{'\n'}{currentUser.userEmail}
+            {currentUser.userName}{'\n'}{'\n'}{currentUser.userEmail}{'\n'}{'\n'}{userLocation}
           </Text>
           <TouchableOpacity
           onPress={() => {
@@ -136,6 +177,12 @@ export default function ProfileScreen({ navigation }) {
            deleteAccount()
           }}
         />
+        <DialogPrompt
+        visibility={showPrompt}
+        cancelFunc={cancelFunction}
+        submitFunc={validPostcode}/>
+      
+    
       <StatusBar style="auto" />
     </View>
     </ScrollView>
@@ -159,17 +206,19 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
     fontSize: 22,
     includeFontPadding: true,
+    textAlign: 'center',
+
   },
   fonts2: {
     color: '#FFF',
-    textAlign: 'left',
+    textAlign: 'center',
     fontFamily: 'Roboto',
     fontSize: 24,
     margin: 10,
   },
   fonts3: {
     color: '#FFF',
-    textAlign: 'left',
+    textAlign: 'right',
     fontFamily: 'Roboto',
     fontStyle: 'italic',
     textDecorationLine: 'underline',
