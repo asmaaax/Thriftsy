@@ -4,6 +4,7 @@ import React from "react"
 import { SelectList } from 'react-native-dropdown-select-list'
 
 
+
 export default function AddItemScreen({ navigation }) {
     
         const [text, onChangeText] = React.useState({ title: '', description: '' });
@@ -32,10 +33,7 @@ export default function AddItemScreen({ navigation }) {
         <View style={styles.imageContainer}>
         <Image
             style={styles.stretch}
-            source={{
-                uri:
-                '',
-            }}
+            source={require('/Users/asmaakhalif/Documents/GitHub/Thriftsy/assets/additem.peg.png')}
         />
         </View>
             
@@ -98,11 +96,12 @@ const styles = StyleSheet.create({
 
     },
     imageContainer: {
-        paddingTop: 50,
+        justifyContent: "center"
       },
       stretch: {
-        width: 50,
+        margin: 12,
         height: 200,
+        width: 400,
         resizeMode: 'stretch',
         
       },
