@@ -4,6 +4,7 @@ import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import ChatScreen from '../screens/ChatScreen';
 import { StyleSheet } from 'react-native';
+import AddItemScreen from '../screens/AddItemScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -22,8 +23,8 @@ screenOptions={{
       <MaterialCommunityIcons name="home" color={color} size={size} />
     ),
   }}/>
-<Tab.Screen name="Add" component={''} options={{
-    tabBarLabel: 'add',
+<Tab.Screen name="Add" component={AddItemScreen} options={{
+    tabBarLabel: 'Add Item',
     tabBarIcon: ({ color, size }) => (
       <MaterialCommunityIcons name="plus" color={color} size={size} />
     ),
