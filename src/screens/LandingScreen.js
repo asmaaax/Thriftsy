@@ -44,8 +44,8 @@ export default function LandingScreen({ navigation }) {
         <Button
                 title="Sign Up"
                 icon={{
-                    name: 'login',
-                    type: 'material-community',
+                    name: 'user-plus',
+                    type: 'font-awesome',
                     size: 30,
                     color: 'white',
                 }}
