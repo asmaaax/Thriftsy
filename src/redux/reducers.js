@@ -16,6 +16,15 @@ export function userReducer(state, action){
         case 'LOG_OUT':
             console.log('User logged out')
             return {...state, logged_in_user: ''}
+        case 'ADD_ITEM':
+            console.log('Adding item...')
+            return {...state, items: [...state.items, action.payload]}
+        case 'RESET_PASSWORD':
+            console.log('Reseting password...')
+            const user = state.users.filter(item => item.userEmail === action.payload.userEmail)
+            user[0].passWord = action.payload.passWord
+            return state
+
         default:
             console.log('no changes made')
             return state

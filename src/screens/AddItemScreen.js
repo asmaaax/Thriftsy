@@ -1,23 +1,69 @@
 import { ListItem, Avatar, Text, Button} from "@rneui/base";
-import { TouchableHighlight, StyleSheet, View, SafeAreaView, TextInput, Image, Platform } from "react-native";
+import { TouchableHighlight, StyleSheet, View, SafeAreaView, TextInput, Image, Platform, ScrollView } from "react-native";
 import React from "react"
 import { SelectList } from 'react-native-dropdown-select-list'
+// import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import { useSelector, useDispatch } from 'react-redux';
 
 
-export default function AddItemScreen({ navigation }) {
+
+export default function AddItemScreen() {
     
-        const [text, onChangeText] = React.useState({ title: '', description: '' });
         
-        const [number, onChangeNumber] = React.useState(null);
-        const handleChange = (name, value) => {
-            setValues({
-              ...values,
-              [name]: value,
-            });
-          };
+        const validatePostcodeURL = 'https://api.postcodes.io/postcodes/';
+
+        const dispatch = useDispatch();
+
+
+        const [title, setTitle] = React.useState('')
+        const [description, setDescription] = React.useState('')
+        const [postcode, setPostcode] = React.useState('');
+        const [selected, setSelected] = React.useState(null);
+
+        currentUser = useSelector(state => state.logged_in_user);
+
+
+
+          const submitFunction = async (item_title, item_description, item_postcode, item_selected, user) => {
+            
+            fetch(`${validatePostcodeURL}${item_postcode}/validate`, {
+              method: 'GET',
+            })
+            .then(response =>  response.json() )
+            .then( d =>  {
+              if (d.result){
+                addItem(item_title, item_description, item_postcode, item_selected, user);
+                setTitle('');
+                setDescription('');
+                setPostcode('');
+                setSelected(null);
+              }
+              else {
+                alert('You entered an invalid postcode')
+              }})
+            .catch(err => {console.log(`ERROR: ${err}`)})
+          }
+         
         
 
-        const [selected, setSelected] = React.useState("");
+  const addItem = (item_title, item_description, item_postcode, item_selected, user) => {
+    if (item_title && item_description && item_postcode && item_selected){
+    const action = {
+      type: 'ADD_ITEM',
+      payload: {
+        'userName': user, 
+        'title': item_title, 
+        'description': item_description, 
+        'location': item_postcode, 
+        'category': item_selected}
+    }
+    dispatch(action)
+    alert('Your item has been successfully added.')
+  }
+  else {
+      alert('There are some missing fields. All fields are required.')
+  }}
+       
   
   const data = [
       {key:'1', value:'Food'},
@@ -28,6 +74,7 @@ export default function AddItemScreen({ navigation }) {
   ]
 
     return (
+      <ScrollView>
         <View style={styles.container} >
         <View style={styles.imageContainer}>
         <Image
@@ -42,17 +89,17 @@ export default function AddItemScreen({ navigation }) {
         <SafeAreaView>
         <TextInput
             style={styles.inputOne}
-            onChangeText={value => handleChange('title', value)}
+            onChangeText={value => setTitle(value)}
             placeholder="Add Title"
-            value={text}
+            value={title}
             
         />
         <TextInput
             style={styles.inputTwo}
-            onChangeText={value => onChangeText(value)}
+            onChangeText={value => setDescription(value)}
             placeholder="Add Description"
             multiline={true}
-            value={text}
+            value={description}
             
         />
         </SafeAreaView>
@@ -63,12 +110,13 @@ export default function AddItemScreen({ navigation }) {
         save="value"
         boxStyles={{margin:12, borderRadius:4}}
         placeholder="Select Category"
+        value={selected}
         />
         <SafeAreaView>
         <TextInput
         style={styles.inputThree}
-        onChangeText={onChangeNumber}
-        value={number}
+        onChangeText={value => setPostcode(value)}
+        value={postcode}
         placeholder="Pick Up Location (Post Code)"
     
       />
@@ -84,10 +132,11 @@ export default function AddItemScreen({ navigation }) {
             borderRadius:4,
             margin: 12,
           }}
-        onPress={() => Alert.alert('Simple Button pressed')}
+        onPress={() => submitFunction(title, description, postcode, selected, currentUser)}
       />
         </View>
         </View>
+        </ScrollView>
     );
 };
 
