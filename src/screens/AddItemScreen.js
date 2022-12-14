@@ -1,5 +1,5 @@
 import { ListItem, Avatar, Text, Button} from "@rneui/base";
-import { TouchableHighlight, StyleSheet, View, SafeAreaView, TextInput, Image, Platform } from "react-native";
+import { TouchableHighlight, StyleSheet, View, SafeAreaView, TextInput, Image, Platform, ScrollView } from "react-native";
 import React from "react"
 import { SelectList } from 'react-native-dropdown-select-list'
 
@@ -25,10 +25,13 @@ export default function AddItemScreen({ navigation }) {
       {key:'2', value:'Appliances'},
       {key:'3', value:'Accomodation'},
       {key:'4', value:'Clothing'},
+      {key:'5', value:'Sanitary'},
+      {key:'6', value:'Other'},
       
   ]
 
     return (
+        <ScrollView>
         <View style={styles.container} >
         <View style={styles.imageContainer}>
         <Image
@@ -86,6 +89,7 @@ export default function AddItemScreen({ navigation }) {
       />
         </View>
         </View>
+        </ScrollView>
     );
 };
 
