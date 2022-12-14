@@ -12,7 +12,6 @@ export default function HomeScreen({ navigation }) {
     return (
       <ScrollView>
       <View style={styles.container}>
-        <View style={styles.logo}><Text>This space is for Logo</Text></View>
         <View style={styles.searchbar}>
         <SearchBar
         platform="ios"

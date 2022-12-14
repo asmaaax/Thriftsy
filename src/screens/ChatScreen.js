@@ -25,7 +25,7 @@ export default function ChatScreen({ navigation }) {
           <Text>Pranshu Chittora</Text>
         </ListItem.Title>
         <ListItem.Subtitle>
-          <Text>React Native Elements</Text>
+          <Text>Hi, is the food package still available for collection?</Text>
         </ListItem.Subtitle>
       </ListItem.Content>
       <ListItem.Chevron color="black" />
