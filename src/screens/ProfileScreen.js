@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import DialogPrompt from '../components/DialogPrompt';
+import MyAvatar from '../components/MyAvatar';
 
 
 export default function ProfileScreen({ navigation }) {
@@ -98,15 +99,19 @@ export default function ProfileScreen({ navigation }) {
     .catch(err => {console.log(`ERROR: ${err}`)})
   }
   
-  const avatarIcons =[
-    'accout', 'bitcoin', 'face-man-shimmer-outline', 'pokeball', 'dog', 'bird', 'face-woman-shimmer-outline', 'snowman', 'alien', 'paw', 'sprout','flower-tulip', 'pine-tree'
-   ]
+  
+  const avatar = useSelector(state => state.avatar)
+  const [showAvatarPrompt, setShowAvatarPrompt] = useState(false)
+  const pickAvatar = (selected) => {
+    const action = {
+      type: 'CHANGE_AVATAR',
+      payload: selected
+    }
+    dispatch(action)
+    setShowAvatarPrompt(false)
+  }
 
-   const [myAvatar, setMyAvatar] = useState(null)
-
-   const pickAvatar = (selected) => {
-      setMyAvatar(selected)
-   }
+  const cancelAvatarPrompt = () => setShowAvatarPrompt(false)
 
   return (
 <ScrollView>    
@@ -114,14 +119,15 @@ export default function ProfileScreen({ navigation }) {
     <Avatar
           size={120}
           rounded
-          icon={{ name: {myAvatar}, type: 'material-community'}}
+          icon={{ name: avatar, type: 'material-community'}}
           containerStyle={{ backgroundColor: '#FFA26B', marginTop: 30, marginRight: 10, alignSelf: 'center' }}
         >
           <Avatar.Accessory 
           color='#FFA26B'
           backgroundColor='#10c699'
           containerStyle={{ borderRadius: 100, borderWidth: 0 }}
-          size={42} />
+          size={42}
+          onPress={()=> setShowAvatarPrompt(true)} />
         </Avatar>
       <View style={styles.card}>
      
@@ -194,7 +200,11 @@ export default function ProfileScreen({ navigation }) {
         visibility={showPrompt}
         cancelFunc={cancelFunction}
         submitFunc={validPostcode}/>
-      
+      <MyAvatar
+      title={'Choose an Avatar'}
+      visibility={showAvatarPrompt}
+      cancelFunc={cancelAvatarPrompt}
+      submitFunc={pickAvatar}/>
     
       <StatusBar style="auto" />
     </View>

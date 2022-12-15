@@ -28,7 +28,6 @@ export default function MyImagePicker() {
       quality: 1,
     });
 
-    // console.log(result)
 
     if (!result.canceled) {
       setImage({uri: result.assets[0].uri});
@@ -37,7 +36,6 @@ export default function MyImagePicker() {
   };
 
   const takeImage = async () => {
-    // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -45,23 +43,23 @@ export default function MyImagePicker() {
       quality: 1,
     });
 
-    // console.log(result);
 
     
 
     if (!result.canceled) {
         setImage({uri: result.assets[0].uri});
         addImageURI({uri: result.assets[0].uri})
-        // console.log(result.assets[0].uri)
+        
     }
   };
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <MyButton text="Upload image from camera" onPressFunction={takeImage}/>
-      <MyButton text="Upload image from photo gallery" onPressFunction={pickImage}/>
 
-      {image && <Image source={imageURI} style={{ width: 200, height: 200 }} />}
+
+       <Image defaultSource={require('../../assets/add-image.png')} source={imageURI} style={{ width: 200, height: 200, borderColor: '#999999', borderWidth: 2}} />
+       <MyButton text="Upload image from camera" onPressFunction={takeImage}/>
+      <MyButton text="Upload image from photo gallery" onPressFunction={pickImage}/>
     </View>
   );
   }
