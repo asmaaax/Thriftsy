@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
-import { Input, Icon, Button, Card, Avatar, ListItem } from '@rneui/base';
+import { Icon, Card, Avatar, ListItem } from '@rneui/base';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import AwesomeAlert from 'react-native-awesome-alerts';
@@ -178,6 +178,9 @@ export default function ProfileScreen({ navigation }) {
           }}
         />
         <DialogPrompt
+        title={'Enter your location'}
+        description={'Enter a valid UK postcode '}
+        placeholder={'Enter postcode'}
         visibility={showPrompt}
         cancelFunc={cancelFunction}
         submitFunc={validPostcode}/>

@@ -4,6 +4,7 @@ import { Input, Icon, Button, Image } from '@rneui/base';
 import React, { useState } from 'react';
 import { togglePasswordVisibility } from '../hooks/togglePasswordVisiblity';
 import { useSelector, useDispatch } from 'react-redux';
+import DialogPrompt from '../components/DialogPrompt';
 
 export default function SignInScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -16,23 +17,23 @@ export default function SignInScreen({ navigation }) {
 
   const checkUserDetails = (userDetails, userList) => {
     
-    const userExists =  userList.filter(item => item.passWord === userDetails.password1 && item.userEmail === userDetails.email1);
-    console.log(userExists)
-    if (userExists.length > 0){
-      username = userExists[0].userName
-      const action = {
-        type: 'LOG_IN',
-        payload: {userName: username, userEmail: userDetails.email1}
+      const userExists =  userList.filter(item => item.passWord === userDetails.password1 && item.userEmail === userDetails.email1);
+      console.log(userExists)
+      if (userExists.length > 0){
+        username = userExists[0].userName
+        const action = {
+          type: 'LOG_IN',
+          payload: {userName: username, userEmail: userDetails.email1}
+        }
+        dispatch(action)
+        console.log('LogIn Successful')
+        return true
       }
-      dispatch(action)
-      console.log('LogIn Successful')
-      return true
+        else {
+          alert('User not found. Please crosscheck your details or Sign up')
+          return false
+        }
     }
-     else {
-        alert('User not found. Please crosscheck your details or Sign up')
-        return false
-      }
-  }
 
   const logIn = (email, password, userList) => {
     let userDetails = {email1: email, password1: password}
@@ -54,13 +55,51 @@ export default function SignInScreen({ navigation }) {
     }
   }
   
+  const [showPrompt, setShowPrompt] = useState(false)
+  const [showPrompt2, setShowPrompt2] = useState(false)
+
+  const checkUserEmail = (email) => {
+    
+    const userFound =  usersList.filter(item => item.userEmail === email);
+    console.log(userFound)
+    if (userFound.length > 0){
+      setEmail(email)
+      setShowPrompt(false)
+      setShowPrompt2(true)
+      }
+    else {
+      setShowPrompt(false)
+      alert('Sorry, this user does not exist. Crosscheck your details or Sign Up')
+    }
+  }
+
+  const changePassword = (password) => {
+    const action = {
+      type: 'RESET_PASSWORD',
+      payload: {userEmail: email, passWord: password}
+    }
+    dispatch(action)
+    setShowPrompt2(false)
+    alert('Password reset successfuly. Sign In with the updated details')
+  }
+
+  const resetPassword = () => {
+    setShowPrompt(true);
+  }
+
+  const cancelFunction = () => {
+    setShowPrompt(false);
+    console.log('Cancelled')
+  }
   
   return (
-    <ScrollView>
+  // <ScrollView>
     <View style={styles.container}>
+     
       <View style={styles.logo}>
         <Image
         source={ require('../../assets/logo2.png')}
+        resizeMode='cover'
         containerStyle={styles.image}
         PlaceholderContent={<ActivityIndicator />}
         />
@@ -126,11 +165,14 @@ export default function SignInScreen({ navigation }) {
               }}
               containerStyle={{
                 width: 335,
-                // minHeight: 400,
+               
                 marginTop: 30,
                 
               }}
               onPress={()=> {
+                console.log(email)
+                console.log(password)
+                console.log(usersList)
                 const logInSuccess = logIn(email, password, usersList)
                 if (logInSuccess){
                 navigation.navigate('Tabs')}
@@ -140,18 +182,45 @@ export default function SignInScreen({ navigation }) {
       <Button
               containerStyle={{
                 width: 335,
-                minHeight: 400,
+             
               }}
               title={<><Text style={styles.text}>Don't have an account?</Text><Text style={styles.text2}> Sign Up</Text></>}
               type="clear"
               titleStyle={{ color: '#FFA26B', fontSize: 24 }}
               onPress={() => navigation.navigate('Sign Up') }
             />
+      <Button
+              containerStyle={{
+                width: 335,
+               
+              }}
+              title={<><Text style={styles.text}>Forgot passsword?</Text><Text style={styles.text2}> Reset password</Text></>}
+              type="clear"
+              titleStyle={{ color: '#FFA26B', fontSize: 24 }}
+              onPress={() => resetPassword() }
+            />
             </View>
+            <View>
+            <DialogPrompt
+        title={'Enter your details to reset your password'}
+        description={'Enter your email'}
+        placeholder={'Enter email'}
+        visibility={showPrompt}
+        cancelFunc={cancelFunction}
+        submitFunc={checkUserEmail}/>
+        <DialogPrompt
+        title={'Enter your new password'}
+        description={''}
+        placeholder={'Enter password'}
+        visibility={showPrompt2}
+        cancelFunc={cancelFunction}
+        submitFunc={changePassword}/>
+        </View>
       
       <StatusBar style="auto" />
     </View>
-    </ScrollView>
+    //  </ScrollView> 
+
   );
 }
 
@@ -159,26 +228,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFF',
-    justifyContent: 'flex-start',
   },
   image: {
     flex: 1,
-    // resizeMethod: 'resize'
+    width: '100%',
+    height: '100%'
+
   },
   logo: {
-    flex: 1,
-    backgroundColor: '#FFF',
-    minHeight: '40%'
+    flex: 2.5,
+    backgroundColor: 'red',
   },
   input: {
     flex: 1,
     backgroundColor: '#FFF',
     alignItems: 'center',
-    margin: 10,
-    marginTop: 30
+    
   },
   button: {
-    flex: 1,
+    flex: 2,
     backgroundColor: '#FFF',
     marginLeft: 10,
     marginRight: 10,

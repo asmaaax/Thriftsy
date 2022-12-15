@@ -4,19 +4,21 @@ import { StyleSheet, View, TouchableOpacity } from 'react-native';
 
 
 export default function DialogPrompt (props) {
-  const [postcode, setPostcode] = useState('')
+  // const [postcode, setPostcode] = useState('')
+  const [val, setVal] = useState('')
+
 
 
     return(
       <View style={styles.container}>
     <Dialog.Container visible={props.visibility}>
-    <Dialog.Title style={{textAlign: 'center'}}>Enter your location</Dialog.Title>
+    <Dialog.Title style={{textAlign: 'center'}}>{props.title}</Dialog.Title>
     <Dialog.Description style={{textAlign: 'center'}}>
-    Enter a valid UK postcode      
+    {props.description}      
     </Dialog.Description>
     <Dialog.Input
-    placeholder='Enter postcode'
-    onChangeText={value => setPostcode(value.trim())}/>
+    placeholder={props.placeholder}
+    onChangeText={value => setVal(value.trim())}/>
     <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
       <TouchableOpacity style={styles.button}>
     <Dialog.Button label="Cancel"
@@ -26,7 +28,7 @@ export default function DialogPrompt (props) {
       <TouchableOpacity style={styles.button2}>
     <Dialog.Button label="Submit"
     color='#FFF'
-    onPress={() => props.submitFunc(postcode)} />
+    onPress={() => props.submitFunc(val)} />
     </TouchableOpacity>
     </View>
   </Dialog.Container>
