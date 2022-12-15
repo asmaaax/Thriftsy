@@ -7,7 +7,7 @@ import MyIcon from '../components/MyIcon';
 
 
 export default function LandingScreen({ navigation }) {
-
+    const sendAlert = () => alert("Still in the works")
     return (
         <View style={styles.container}>
             <View style={styles.logo}>
@@ -67,8 +67,8 @@ export default function LandingScreen({ navigation }) {
                 />
       </View>
       <View style={styles.button2}>
-                    <MyButton text={"About"}/>
-                    <MyButton text={"Terms and Conditions"}/>
+                    <MyButton text={"About"} onPressFunction={sendAlert}/>
+                    <MyButton text={"Terms and Conditions"} onPressFunction={sendAlert}/>
 
       </View>
       <View style={styles.icon}>

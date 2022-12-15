@@ -93,7 +93,6 @@ export default function SignInScreen({ navigation }) {
   }
   
   return (
-  // <ScrollView>
     <View style={styles.container}>
      
       <View style={styles.logo}>
@@ -104,6 +103,9 @@ export default function SignInScreen({ navigation }) {
         PlaceholderContent={<ActivityIndicator />}
         />
       </View>
+      
+      <View style={styles.container2}>
+      <ScrollView>
       <View style={styles.input}>
       <Input
       inputStyle={{textAlign: 'auto'}}
@@ -216,10 +218,12 @@ export default function SignInScreen({ navigation }) {
         cancelFunc={cancelFunction}
         submitFunc={changePassword}/>
         </View>
-      
+        </ScrollView> 
+        </View>
+        
+
       <StatusBar style="auto" />
     </View>
-    //  </ScrollView> 
 
   );
 }
@@ -229,14 +233,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFF',
   },
+  container2: {
+    flex: 1,
+    backgroundColor: '#FFF',
+  },
   image: {
     flex: 1,
-    width: '100%',
-    height: '100%'
 
   },
   logo: {
-    flex: 2.5,
+    flex: 0.8,
     backgroundColor: 'red',
   },
   input: {
@@ -250,7 +256,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     marginLeft: 10,
     marginRight: 10,
-    marginTop: 20,
   },
   text: { color: '#FFA26B', fontSize: 24, fontStyle: 'italic', fontFamily: 'Roboto' },
   text2: { color: '#10c699', fontSize: 24, fontStyle: 'italic', fontFamily: 'Roboto' }

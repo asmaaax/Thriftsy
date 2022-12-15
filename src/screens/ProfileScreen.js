@@ -98,6 +98,15 @@ export default function ProfileScreen({ navigation }) {
     .catch(err => {console.log(`ERROR: ${err}`)})
   }
   
+  const avatarIcons =[
+    'accout', 'bitcoin', 'face-man-shimmer-outline', 'pokeball', 'dog', 'bird', 'face-woman-shimmer-outline', 'snowman', 'alien', 'paw', 'sprout','flower-tulip', 'pine-tree'
+   ]
+
+   const [myAvatar, setMyAvatar] = useState(null)
+
+   const pickAvatar = (selected) => {
+      setMyAvatar(selected)
+   }
 
   return (
 <ScrollView>    
@@ -105,7 +114,7 @@ export default function ProfileScreen({ navigation }) {
     <Avatar
           size={120}
           rounded
-          icon={{ name: 'user', type: 'font-awesome'}}
+          icon={{ name: {myAvatar}, type: 'material-community'}}
           containerStyle={{ backgroundColor: '#FFA26B', marginTop: 30, marginRight: 10, alignSelf: 'center' }}
         >
           <Avatar.Accessory 
@@ -115,6 +124,7 @@ export default function ProfileScreen({ navigation }) {
           size={42} />
         </Avatar>
       <View style={styles.card}>
+     
         <Card 
         containerStyle={{ marginTop: 15, borderBottomWidth: 1, minWidth:'95%', backgroundColor: '#10c699', borderRadius: 5, borderColor: '#10c699'}}>
             <View>
