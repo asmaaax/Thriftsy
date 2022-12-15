@@ -6,7 +6,7 @@ export default function MyButton(props) {
   return (
     <TouchableOpacity 
     style={styles.buttonStyle}
-    onPress={()=>alert("Still in the works")}
+    onPress={props.onPressFunction}
     activeOpacity={1}>
       <Text style={styles.textStyle}>{props.text}</Text>
     </TouchableOpacity>

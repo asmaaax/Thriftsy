@@ -18,13 +18,15 @@ export function userReducer(state, action){
             return {...state, logged_in_user: ''}
         case 'ADD_ITEM':
             console.log('Adding item...')
-            return {...state, items: [...state.items, action.payload]}
+            return {...state, items: [...state.items, action.payload], image_uri: null}
         case 'RESET_PASSWORD':
             console.log('Reseting password...')
             const user = state.users.filter(item => item.userEmail === action.payload.userEmail)
             user[0].passWord = action.payload.passWord
             return state
-
+        case 'ADD_IMAGE':
+            console.log('Adding image URI...')
+            return {...state, image_uri: action.payload}
         default:
             console.log('no changes made')
             return state
