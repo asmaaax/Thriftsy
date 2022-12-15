@@ -1,11 +1,12 @@
 import * as React from "react";
 import { ListItem, Avatar, Text} from "@rneui/base";
-import { TouchableHighlight, StyleSheet } from "react-native";
+import { TouchableHighlight, StyleSheet, ScrollView, View } from "react-native";
 
 
 export default function ChatScreen({ navigation }) {
   return (
-
+ <ScrollView>
+  <View>
     <ListItem
       Component={TouchableHighlight}
       containerStyle={{}}
@@ -30,6 +31,8 @@ export default function ChatScreen({ navigation }) {
       </ListItem.Content>
       <ListItem.Chevron color="black" />
     </ListItem>
+    </View>
+    </ScrollView>
   );
 }
 

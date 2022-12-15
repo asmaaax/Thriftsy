@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-
+    backgroundColor: '#FFF'
   },
   logo: {
     flex: 0.8,
