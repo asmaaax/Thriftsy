@@ -1,4 +1,4 @@
-<img src="./assets/logo2.png" alt="Thriftsy logo" title="Thriftsy logo" align="right" height="40" />
+<img src="./assets/logo2.png" alt="Thriftsy logo" title="Thriftsy logo" align="right" height="70" />
 
 
 
