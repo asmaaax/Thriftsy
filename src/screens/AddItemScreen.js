@@ -7,7 +7,9 @@ import { useSelector, useDispatch } from 'react-redux';
 
 
 
+
 export default function AddItemScreen() {
+
     
         
         const validatePostcodeURL = 'https://api.postcodes.io/postcodes/';
@@ -70,19 +72,20 @@ export default function AddItemScreen() {
       {key:'2', value:'Appliances'},
       {key:'3', value:'Accomodation'},
       {key:'4', value:'Clothing'},
+      {key:'5', value:'Sanitary'},
+      {key:'6', value:'Other'},
       
   ]
 
     return (
+
       <ScrollView>
+
         <View style={styles.container} >
         <View style={styles.imageContainer}>
         <Image
             style={styles.stretch}
-            source={{
-                uri:
-                '',
-            }}
+            source={require('/Users/asmaakhalif/Documents/GitHub/Thriftsy/assets/additem.peg.png')}
         />
         </View>
             
@@ -147,11 +150,12 @@ const styles = StyleSheet.create({
 
     },
     imageContainer: {
-        paddingTop: 50,
+        justifyContent: "center"
       },
       stretch: {
-        width: 50,
+        margin: 12,
         height: 200,
+        width: 400,
         resizeMode: 'stretch',
         
       },

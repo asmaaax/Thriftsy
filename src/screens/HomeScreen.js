@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, View, Text, Image, ScrollView } from 'react-native';
-import { SearchBar, Card, Icon, Avatar } from "@rneui/base";
+import { StyleSheet, View, Text, Image, ScrollView } from 'react-native';
+import { SearchBar, Card, Icon, Avatar, Button } from "@rneui/base";
 import React, { useState } from 'react';
 
 
@@ -34,6 +34,7 @@ export default function HomeScreen({ navigation }) {
         value={value}
         />
         </View>
+        <ScrollView>
         <View
         style={{
           flexDirection: 'row',
@@ -63,26 +64,29 @@ export default function HomeScreen({ navigation }) {
          <Avatar
           size={64}
           rounded
+          icon={{ name: 'kettle' }}
+          containerStyle={{ backgroundColor: '#33D3AB' }}
+        />
+        <Avatar
+          size={64}
+          rounded
           icon={{ name: '' }}
           containerStyle={{ backgroundColor: '#33D3AB' }}
         />
         </View>
+        </ScrollView>
         <View style={styles.cards}>
         <Card>
           <Card.Divider />
           <Card.Image
-            style={{ padding: 0 }}
-            source={{
-              uri:
-                '',
-            }}
+            style={{ padding: 0, borderRadius: 4,}}
+            source={require('/Users/asmaakhalif/Documents/GitHub/Thriftsy/assets/card1.jpeg')}
           />
           <Text style={{ 
-            marginBottom: 10,
-            marginTop: 10,
+            marginBottom: 30,
+            marginTop: 20,
             }}>
-            The idea with React Native Elements is more about component
-            structure than actual design.
+            Food parcel for family, available for collection from nearby community centre or delivery to home address.
           </Text>
           <Button
             icon={
@@ -97,6 +101,8 @@ export default function HomeScreen({ navigation }) {
               marginLeft: 0,
               marginRight: 0,
               marginBottom: 0,
+              backgroundColor: '#FFA26B',
+              borderColor: 'transparent',
               
             }}
             title="VIEW NOW"
@@ -109,53 +115,13 @@ export default function HomeScreen({ navigation }) {
           <Card.Divider />
           <Card.Image
             style={{ padding: 0 }}
-            source={{
-              uri:
-                '',
-            }}
+            source={require('/Users/asmaakhalif/Documents/GitHub/Thriftsy/assets/card2.jpeg')}
           />
           <Text style={{ 
-            marginBottom: 10,
-            marginTop: 10,
+            marginBottom: 30,
+            marginTop: 20,
             }}>
-            The idea with React Native Elements is more about component
-            structure than actual design.
-          </Text>
-          <Button
-            icon={
-              <Icon
-                name="code"
-                color="#FFA26B"
-                iconStyle={{ marginRight: 10 }}
-              />
-            }
-            buttonStyle={{
-              borderRadius: 0,
-              marginLeft: 0,
-              marginRight: 0,
-              marginBottom: 0,
-            }}
-            title="VIEW NOW"
-            color='#FFA26B'
-          />
-        </Card>
-        </View>
-        <View style={styles.cards}>
-        <Card>
-          <Card.Divider />
-          <Card.Image
-            style={{ padding: 0 }}
-            source={{
-              uri:
-                '',
-            }}
-          />
-          <Text style={{ 
-            marginBottom: 10,
-            marginTop: 10,
-            }}>
-            The idea with React Native Elements is more about component
-            structure than actual design.
+            Emergency affordable double bedroom to rent in the Hackney area. Click view now to enquire about accomodation.
           </Text>
           <Button
             icon={
@@ -181,18 +147,46 @@ export default function HomeScreen({ navigation }) {
           <Card.Divider />
           <Card.Image
             style={{ padding: 0 }}
-            source={{
-              uri:
-                '',
+            source={require('/Users/asmaakhalif/Documents/GitHub/Thriftsy/assets/card3.jpeg')}
+          />
+          <Text style={{ 
+            marginBottom: 30,
+            marginTop: 20,
+            }}>
+            Size 6 junior boys black trainers. Like new condition, available for collection or delivery.
+          </Text>
+          <Button
+            icon={
+              <Icon
+                name="code"
+                color="#ffffff"
+                iconStyle={{ marginRight: 10 }}
+              />
+            }
+            buttonStyle={{
+              borderRadius: 0,
+              marginLeft: 0,
+              marginRight: 0,
+              marginBottom: 0,
             }}
+            title="VIEW NOW"
+            color='#FFA26B'
+          />
+        </Card>
+        </View>
+        <View style={styles.cards}>
+        <Card>
+          <Card.Divider />
+          <Card.Image
+            style={{ padding: 0 }}
+            source={require('/Users/asmaakhalif/Documents/GitHub/Thriftsy/assets/card4.jpeg')}
           />
           <Text 
           style={{ 
-            marginBottom: 10,
-            marginTop: 10,
+            marginBottom: 30,
+            marginTop: 20,
             }}>
-            The idea with React Native Elements is more about component
-            structure than actual design.
+            Sanitary parcel for one person ready for collection or delivery.
           </Text>
           <Button
             icon={
