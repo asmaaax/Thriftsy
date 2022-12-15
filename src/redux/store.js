@@ -35,6 +35,7 @@ export const state = {
         'category': 'Sanitary', 
         'URI': require('../../assets/card4.jpeg')}
     ],
-    image_uri: null
+    image_uri: null,
+    avatar: ''
 
 }

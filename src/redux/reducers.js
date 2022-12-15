@@ -27,6 +27,9 @@ export function userReducer(state, action){
         case 'ADD_IMAGE':
             console.log('Adding image URI...')
             return {...state, image_uri: action.payload}
+        case 'CHANGE_AVATAR':
+            console.log('Changing avatar...')
+            return {...state, avatar: action.payload}
         default:
             console.log('no changes made')
             return state
