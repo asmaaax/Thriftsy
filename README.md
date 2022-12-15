@@ -1,4 +1,6 @@
-<img src="/Users/asmaakhalif/Documents/GitHub/Thriftsy/assets/logo2.png" alt="Walk2Zero logo" title="Walk2Zero" align="right" height="40" />
+<img src="./assets/logo2.png" alt="Thriftsy logo" title="Thriftsy logo" align="right" height="40" />
+
+
 
 # THRIFTSY
 ## +Masters Final Project - Code First Girls 
