@@ -136,13 +136,19 @@ export default function ProfileScreen({ navigation }) {
             <View>
           
           <Text style={styles.fonts2} h2>
-            {currentUser.userName}{'\n'}{'\n'}{currentUser.userEmail}{'\n'}{'\n'}{userLocation}
+            {currentUser.userName}{'\n'}{'\n'}{currentUser.userEmail}
           </Text>
+          <TouchableOpacity
+          onPress={() => {
+            getLocation();;
+          }}>
+          <Text style={styles.fonts2}>{userLocation}</Text></TouchableOpacity>
           <TouchableOpacity
           onPress={() => {
             logOut();
             navigation.navigate('Sign In');
-          }}>
+          }}
+          style={{backgroundColor: '#FFA26B', width: 90, marginLeft: 200, borderRadius: 10}}>
           <Text style={styles.fonts3}>Sign Out</Text></TouchableOpacity>
           </View>
         </Card>
@@ -243,9 +249,8 @@ const styles = StyleSheet.create({
     color: '#FFF',
     textAlign: 'right',
     fontFamily: 'Roboto',
-    fontStyle: 'italic',
-    textDecorationLine: 'underline',
-    fontSize: 20,
+    fontStyle: 'bold',
+    fontSize: 21,
     margin: 10,
   }
 });
