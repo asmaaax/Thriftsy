@@ -15,7 +15,7 @@ export function userReducer(state, action){
             return {...state, logged_in_user: action.payload}    
         case 'LOG_OUT':
             console.log('User logged out')
-            return {...state, logged_in_user: ''}
+            return {...state, logged_in_user: '', avatar: ''}
         case 'ADD_ITEM':
             console.log('Adding item...')
             return {...state, items: [...state.items, action.payload], image_uri: null}
