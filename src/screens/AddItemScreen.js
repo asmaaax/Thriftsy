@@ -83,6 +83,7 @@ export default function AddItemScreen() {
       <ScrollView>
 
         <View style={styles.container} >
+          
         <View style={styles.imageContainer}>
           <MyImagePicker/>
       
